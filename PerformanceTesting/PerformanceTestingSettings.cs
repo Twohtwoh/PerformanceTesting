@@ -44,7 +44,7 @@ namespace PerformanceTesting
         //public DecisionsFramework.Design.Flow.Mapping.IInputMapping InputMapping { get; set; }
         //public DecisionsFramework.Design.InputData.InputData Input { get; set; }
         //public DecisionsFramework.Design.InputData.InputDataService InputService { get; set; }
-        //public DecisionsFramework.Design.InputData.IInputDataService InDataSer { get; set; }
+        //public DecisionsFramework.Design.InputData.IInputDataSrvice InDataSer { get; set; }
         //public FlowInputThing[] flowInputThings { get; set; }
 
 
