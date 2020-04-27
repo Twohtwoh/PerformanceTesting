@@ -43,23 +43,23 @@ namespace PerformanceTesting
                 {
                     //Create a stopwatch and kick it off, logging a guid to identify the individual flow run
                     string flowExecutionId = System.Guid.NewGuid().ToString();
-                    Stopwatch innerStopWatch = new Stopwatch();
+                    //Stopwatch innerStopWatch = new Stopwatch();
                     Log.Error("Starting Flow Run: " + flowExecutionId);
-                    innerStopWatch.Start();
+                    //innerStopWatch.Start();
 
                     //Execute the flow with canned data
                     FlowEngine.StartSyncFlow(FlowEngine.GetFlow(_flowId),
                         GetFlowStateData());
 
                     //Stop the stopwatch and log how much time it took for the individual flow run
-                    innerStopWatch.Stop();
-                    Log.Error("Flow Run " + flowExecutionId + " took: " + innerStopWatch.Elapsed.TotalMilliseconds +
-                              " milliseconds.");
+                    //innerStopWatch.Stop();
+                    //Log.Error("Flow Run " + flowExecutionId + " took: " + innerStopWatch.Elapsed.TotalMilliseconds +
+                    //          " milliseconds.");
                 }
 
                 //Stop the stopwatch and log how much time it took for the batch of flow runs
                 outerStopWatch.Stop();
-                Log.Error("Thread: " + threadExecutionId + ", number of executions: " + _executions + ",flow: " + _flowId + ", took " + outerStopWatch.Elapsed.TotalSeconds + " seconds.");
+                Log.Error("Ending Thread: " + threadExecutionId + ", number of executions: " + _executions + ", flow: " + _flowId + ", took " + outerStopWatch.Elapsed.TotalSeconds + " seconds.");
             }
         }
 

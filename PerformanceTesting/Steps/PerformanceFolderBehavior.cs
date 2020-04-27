@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
+using DecisionsFramework;
 using DecisionsFramework.Design;
 using DecisionsFramework.ServiceLayer.Actions;
 using DecisionsFramework.ServiceLayer.Actions.Common;
@@ -194,12 +196,21 @@ namespace PerformanceTesting
         //flowId is the flow to execute
         private static void SetExecutionsValue(AbstractUserContext userContext, int executions, int numberOfThreads)
         {
+            Log Log = new Log("Performance Testing");
+            Stopwatch TotalStopWatch = new Stopwatch();
+            TotalStopWatch.Start();
             for (int i = 0; i < numberOfThreads; i++)
             {
                 FlowExecutionThread flowExecutionThread = new FlowExecutionThread(executions, userContext);
                 Thread thread = new Thread(new ThreadStart(flowExecutionThread.StartFlowExecution));
                 thread.Start();
             }
+            TotalStopWatch.Stop();
+            int TotalFlowRuns = numberOfThreads * executions;
+            Log.Error("Completed " + TotalFlowRuns + " Flow Runs In " + TotalStopWatch.Elapsed.TotalSeconds);
+            //Log.Error("Flow Run " + flowExecutionId + " took: " + innerStopWatch.Elapsed.TotalMilliseconds +
+            //          " milliseconds.");
+
         }
     }
 }
