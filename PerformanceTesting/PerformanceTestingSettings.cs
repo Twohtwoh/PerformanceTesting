@@ -1,10 +1,7 @@
 using DecisionsFramework.Data.ORMapper;
-using DecisionsFramework.Design.Flow;
-using DecisionsFramework.Design.Flow.Mapping;
 using DecisionsFramework.ServiceLayer;
 using DecisionsFramework.ServiceLayer.Actions;
 using DecisionsFramework.ServiceLayer.Actions.Common;
-using DecisionsFramework.ServiceLayer.Services.ConfigurationStorage;
 using DecisionsFramework.ServiceLayer.Utilities;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -21,7 +18,7 @@ namespace PerformanceTesting
     public class PerformanceTestingSettings : AbstractModuleSettings
     {
 
-       
+
         public PerformanceTestingSettings()
         {
             EntityName = "Performance Testing Configuration";
@@ -34,8 +31,8 @@ namespace PerformanceTesting
         public string DecisionsElementToTest { get; set; }
 
         public FlowInputThing[] Inputs { get; set; }
-        
- 
+
+
         //public KeyValuePairDataStructure[] InputData { get; set;}
 
         //public MappingUtility mappingUtility { get; set; }
