@@ -29,6 +29,8 @@ namespace PerformanceTesting
 
         [ORMField]
         public string DecisionsElementToTest { get; set; }
+        [ORMField]
+        public int Threads { get; set; }
 
         public FlowInputThing[] Inputs { get; set; }
 

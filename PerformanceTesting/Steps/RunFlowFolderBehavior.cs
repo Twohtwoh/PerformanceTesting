@@ -11,6 +11,7 @@ namespace PerformanceTesting
         public override bool IsVisible(Folder f)
         {
             return UserContextHolder.GetCurrent().StudioPortal;
+        
         }
 
         public override DecisionsFramework.ServiceLayer.Actions.BaseActionType[] GetFolderActions(

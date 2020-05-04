@@ -46,15 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DecisionsFramework\ServiceLayer\Actions\Common\BaseGetDataAction.cs" />
     <Compile Include="ModuleInit.cs" />
     <Compile Include="PerformanceTestingSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\FlowExecutionThread.cs" />
+    <Compile Include="Steps\GetMapperAction.cs" />
     <Compile Include="Steps\PerformanceFolderBehavior.cs" />
     <Compile Include="Steps\RunFlowFolderBehavior.cs" />
     <Compile Include="Steps\FlowInputs.cs" />
     <Compile Include="Steps\CustomSyncStep.cs" />
     <Compile Include="Steps\SimpleStepCode.cs" />
+    <Compile Include="Steps\_Mapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
