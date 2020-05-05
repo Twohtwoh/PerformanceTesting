@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ExportDescription xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Replies: Update</Name>
+  <ParentFolderId>8e667deb-d56d-11e9-a453-9cb6d0c3a0d6</ParentFolderId>
+  <ParentFolderPath>_Google Drive/REST Services/Google Drive Service</ParentFolderPath>
+  <TypeName>DecisionsFramework.ServiceLayer.Services.ExternalServiceReference.RESTService.RESTMethod</TypeName>
+  <ShortTypeName>RESTMethod</ShortTypeName>
+  <Id>44fcd9fa-d631-11e9-a453-9cb6d0c3a0d6</Id>
+  <ExportedBy>blake@decisions.com</ExportedBy>
+  <ExportedOn>2019-09-19T10:42:59.5991105-04:00</ExportedOn>
+  <PlatformVersion>6.1.1.63680</PlatformVersion>
+  <DependsOn>
+    <ExportDependency>
+      <Id>8e667deb-d56d-11e9-a453-9cb6d0c3a0d6</Id>
+      <Name>Google Drive Service</Name>
+      <TypeName>DecisionsFramework.ServiceLayer.Services.Folder.Folder</TypeName>
+      <ShortTypeName>Folder</ShortTypeName>
+      <BehaviorTypeName>DecisionsFramework.ServiceLayer.Services.ExternalServiceReference.RESTService.RESTServiceFolderBehavior</BehaviorTypeName>
+      <IsDeclaredDependency>false</IsDeclaredDependency>
+    </ExportDependency>
+  </DependsOn>
+  <DependsOnAssemblies />
+  <StructureImport>false</StructureImport>
+  <DependsOnStructures>false</DependsOnStructures>
+  <Size>798</Size>
+  <Data>SnNvblN0b3JhZ2VQSwMEFAAAAAgAXVUzTxpIiFmbAgAAJgUAAAsAAABKc29uU3RvcmFnZX1T224aMRD9FbTPQJYQloAUtVwWlTQJCAhSnypjD2DFa2/HXgiN+PeOwVB6SRZp8Zw5Pp45O36L4qj9Fs396/tsNB5179PeLGrHZQq/jdOnzmMataM+cGml0XaALIOtwZfqFHAjOTywHeApsNX01QFqpgIwgSUgaA7VSTqdBfCwfgS3NqJc+le5XJoDeuguqdboF5dLvUK5AuFOQ+GQqXJpXCyU5F9hNzMvoO90oVRUjhCsO+oOBRV9c7PkorVkFZHUa5VaDVoVdtOoV1p8kYiY11ksEtpVIFW7ykA72nO1lArs1Zv/G4r9FTeZzxASVh5EyJX0LL/YEfKJ+KCE3ZOc8xWlmhsh9Wq2y4FUnycPBwQEEbJDhYSOmeNrArjRjpRPXG1z8oQExaGlHwV11TViNzCYMV/jAE02UGY7dUhHEMlsAFEKIH8lU/Inc+Temb4khv1v5t4aTUmp88INbQeR7QLfFI6wUNGEbedMFXB0mD5FHz7UO5L+FLRrs+2IDaNREKczQtVdZuEZVUAXx2hqCuRw0Syl4JWMcbU47pFhUhc+7S6EOoVbk4+SH6oKeozA0MeT0b4HudIGoQfoyGTiQopo0AZ+jpc6NMAH/0OysDB1pM6pZsl7CML+zvQK60w2Y6uh9goGgz1fgAnAvxUOgzsUFzDVBWLkt9YCupZCwLkRkUktLc2/MziXsB1pdXLXV+toQBQdNOwTeAtJ0hSwqIhGIt4f/eO+J7p4/jMfp7pdes4Fde4HE4EWYqT7Pm5HSb0Z11sJSV/HSTOmx48zDbof1o84Qajr610o9gKfxenaV+leXah8QGHI13JzHp9TGM5tNK5vm83WdXx+iNMHBe68I0Qj/R5d2lRI1zP50dd9OfIfKN7vfwFQSwECMwAUAAAACABdVTNPGkiIWZsCAAAmBQAACwAAAAAAAAAAAAAAAAAAAAAASnNvblN0b3JhZ2VQSwUGAAAAAAEAAQA5AAAAxAIAAAAA</Data>
+  <RequiresApproval>false</RequiresApproval>
+  <OverridingImport>false</OverridingImport>
+  <ModuleName>Google Drive Project</ModuleName>
+  <ImportOrder>400</ImportOrder>
+  <ModifiedOn>2019-09-13T10:17:52.067</ModifiedOn>
+  <TagData />
+</ExportDescription>

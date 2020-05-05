@@ -268,6 +268,20 @@ namespace PerformanceTesting
             //          " milliseconds.");
 
         }
+
+        public static bool AbsDev(double today, double yesterday)
+        {
+            double Sub1 = yesterday - today;
+            if (Sub1 < 0)
+                Sub1 = Sub1 * (-1);
+            double absValue = Sub1;
+            double multiply = absValue * 8;
+            if (today > multiply)
+                return true;
+            else
+                return false;
+}
+
     }
-    
+
 }
