@@ -155,7 +155,7 @@ namespace PerformanceTesting
         {
             //PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
 
-            SetExecutionsValue(userContext, answer.executions, answer.numberOfThreads, answer.flowId);
+            SetExecutionsValue(userContext, answer.executions, answer.numberOfThreads, answer.flowId, answer.UnitTestName);
         }
 
         ////Wrapper method to call a method on action execution that requires more than the standard action parameters
@@ -247,17 +247,17 @@ namespace PerformanceTesting
             //          " milliseconds.");
 
         }
-        public static void SetExecutionsValue(AbstractUserContext userContext, int executions, int numberOfThreads, string FlowId)
+        public static void SetExecutionsValue(AbstractUserContext userContext, int executions, int numberOfThreads, string flowId, string unitTestName)
         {
             //PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
             Log Log = new Log("Performance Testing");
             Stopwatch TotalStopWatch = new Stopwatch();
             TotalStopWatch.Start();
             int TotalFlowRuns = numberOfThreads * executions;
-            Log.Error("Starting " + TotalFlowRuns + " Flow Runs for " + FlowId);
+            Log.Error("Starting " + TotalFlowRuns + " Flow Runs for " + unitTestName);
             for (int i = 0; i < numberOfThreads; i++)
             {
-                FlowExecutionThread flowExecutionThread = new FlowExecutionThread(executions, userContext, FlowId);
+                FlowExecutionThread flowExecutionThread = new FlowExecutionThread(executions, userContext, flowId);
                 Thread thread = new Thread(new ThreadStart(flowExecutionThread.StartFlowExecution));
                 thread.Start();
             }

@@ -13,10 +13,8 @@ namespace PerformanceTesting
         public int executions;
         public int numberOfThreads;
         public string flowId;
+        public string unitTestId;
+        public string UnitTestName;
     }
 
-}
-
-namespace DecisionsFramework.ServiceLayer.Actions.Common
-{
 }

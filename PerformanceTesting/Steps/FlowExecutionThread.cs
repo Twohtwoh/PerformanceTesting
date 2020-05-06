@@ -1,8 +1,13 @@
-﻿using DecisionsFramework;
+﻿using Decisions.Utilities.OpenXmlPowerTools;
+using DecisionsFramework;
 using DecisionsFramework.Design.Flow;
 using DecisionsFramework.Design.Flow.Mapping;
+using DecisionsFramework.Design.Flow.Service.Debugging;
+using DecisionsFramework.Design.InputData;
 using DecisionsFramework.ServiceLayer;
+using DecisionsFramework.ServiceLayer.Services.UnitTesting;
 using DecisionsFramework.ServiceLayer.Utilities;
+using DecisionsFramework.Utilities.FrameworkUnitTests;
 using System;
 using System.Diagnostics;
 
@@ -26,12 +31,12 @@ namespace PerformanceTesting
             this._userContext = userContext;
             this._flowId = Settings.DecisionsElementToTest;
         }
-        public FlowExecutionThread(int executions, AbstractUserContext userContext, string FlowId)
+        public FlowExecutionThread(int executions, AbstractUserContext userContext, string flowId)
         {
             PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
             this._executions = executions;
             this._userContext = userContext;
-            this._flowId = FlowId;
+            this._flowId = flowId;
         }
 
         //Method to execute the specified flow a specified number of times.
@@ -45,6 +50,7 @@ namespace PerformanceTesting
                 Stopwatch outerStopWatch = new Stopwatch();
                 //Log.Error("Starting Thread: " + threadExecutionId + ", number of executions: " + _executions + ",flow: " + _flowId);
                 outerStopWatch.Start();
+                UnitTestService unitTestService = new UnitTestService();
 
                 //Kick off the specified flow executions with the Flow Engine
                 for (int i = 0; i < _executions; i++)
@@ -56,8 +62,12 @@ namespace PerformanceTesting
                     //innerStopWatch.Start();
 
                     //Execute the flow with canned data
-                    FlowEngine.StartSyncFlow(FlowEngine.GetFlow(_flowId),
-                        GetFlowStateData());
+
+
+                    unitTestService.ExecuteUnitTestsForFlow(_userContext, _flowId, false);
+                    //FlowEngine.StartSyncFlow(FlowEngine.GetFlow(_flowId), GetFlowStateData());
+
+
 
                     //Stop the stopwatch and log how much time it took for the individual flow run
                     //innerStopWatch.Stop();
@@ -72,10 +82,12 @@ namespace PerformanceTesting
         }
 
         //Private method containing canned data to use per flow run.
-        private static FlowStateData GetFlowStateData()
+        private static FlowStateData GetFlowStateData(string flowId)
         {
-            PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
+            //PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
             FlowStateData Out = new FlowStateData();
+            
+            
             //Out.AddValues();
             //return Out;
             //int i = 0;
