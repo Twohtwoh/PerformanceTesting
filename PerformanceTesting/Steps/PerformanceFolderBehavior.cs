@@ -20,239 +20,28 @@ namespace PerformanceTesting
     * This class is extending the DesignerProjectFolder to inherit most behavior from the Designer Project Folder Behavior
     * and just override what we need to override for a specific use case.
     */
-    public class RunFlowFolderBehavior : DesignerProjectFolder
+    public class RunUnitTestBatch
     {
-        //Override to add folder actions for this custom behavior
-        public override BaseActionType[] GetFolderActions(Folder folder, BaseActionType[] proposedActions, EntityActionType[] types)
-        {
-            //Create a new list of actions
-            PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
-
-            List<BaseActionType> allActions = new List<BaseActionType>();
-
-            //Add Non Batch Flow Options
-            //Parameters:
-            //Name - What shows up in the context menu
-            //Description - A description
-            //Service Param Method - The method to call when you select the action
-            //Title - A title
-            //Label - Label that is shown on the popup
-            //Current Answer - The initial value of the field type of the action, in this case we're adding an Int Action
-            //allActions.Add(
-                   // new GetIntAction(
-                   // "Run Performance Test on " + Settings.DecisionsElementToTest,
-                   //"",
-            //        RunTest,
-            //        "Execute Flow Performance Testing",
-            //        "# of Flow Executions per Thread",
-            //        1));
-            allActions.Add(
-                new DecisionsFramework.ServiceLayer.Actions.Common.BaseGetDataAction<_Mapper>(
-
-                    "2Run Performance Test on " + Settings.DecisionsElementToTest,
-                    "A",
-                    RunTest,
-                    "Execute Flow Performance Testing",
-                    "# of Flow Executions per Thread",
-                    new _Mapper
-                    {
-                        executions=5,
-                        numberOfThreads=2
-                    }
-                    )
-                ) ;
-            
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 8 Threads - Non Batch",
-            //        "Executes Flow ID: e9946638-79cd-11ea-8374-00155dc80f01 the specified amount of times",
-            //        SetExecutionsValueNonBatch8,
-            //        "Execute Flow Performance Testing",
-            //        "# of Flow Executions per Thread",
-            //        1));
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 16 Threads - Non Batch",
-            //        "Executes Flow ID: e9946638-79cd-11ea-8374-00155dc80f01 the specified amount of times",
-            //        SetExecutionsValueNonBatch16,
-            //        "Execute Flow Performance Testing",
-            //        "# of Flow Executions per Thread",
-            //        1));
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 32 Threads - Non Batch",
-            //        "Executes Flow ID: e9946638-79cd-11ea-8374-00155dc80f01 the specified amount of times",
-            //        SetExecutionsValueNonBatch32,
-            //        "Execute Flow Performance Testing",
-            //        "# of Flow Executions per Thread",
-            //        1));
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 64 Threads - Non Batch",
-            //        "Executes Flow ID: e9946638-79cd-11ea-8374-00155dc80f01 the specified amount of times",
-            //        SetExecutionsValueNonBatch64,
-            //        "Execute Flow Performance Testing",
-            //        "# of Flow Executions per Thread",
-            //        1));
-            //
-            //Add Batch Flow Options
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 4 Threads - Batch", 
-            //        "Executes Flow ID: f0a5627e-5338-11ea-8232-a72eeb3fabdb the specified amount of times", 
-            //        SetExecutionsValueBatch4, 
-            //        "Execute Flow Performance Testing", 
-            //        "# of Flow Executions per Thread", 
-            //        1));
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 8 Threads - Batch", 
-            //        "Executes Flow ID: f0a5627e-5338-11ea-8232-a72eeb3fabdb the specified amount of times", 
-            //        SetExecutionsValueBatch8, 
-            //        "Execute Flow Performance Testing", 
-            //        "# of Flow Executions per Thread", 
-            //        1));
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 16 Threads - Batch", 
-            //        "Executes Flow ID: f0a5627e-5338-11ea-8232-a72eeb3fabdb the specified amount of times", 
-            //        SetExecutionsValueBatch16, 
-            //        "Execute Flow Performance Testing", 
-            //        "# of Flow Executions per Thread", 
-            //        1));
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 32 Threads - Batch", 
-            //        "Executes Flow ID: f0a5627e-5338-11ea-8232-a72eeb3fabdb the specified amount of times", 
-            //        SetExecutionsValueBatch32, 
-            //        "Execute Flow Performance Testing", 
-            //        "# of Flow Executions per Thread", 
-            //        1));
-            //allActions.Add(
-            //    new GetIntAction(
-            //        "Execute - 64 Threads - Batch", 
-            //        "Executes Flow ID: f0a5627e-5338-11ea-8232-a72eeb3fabdb the specified amount of times", 
-            //        SetExecutionsValueBatch64, 
-            //        "Execute Flow Performance Testing", 
-            //        "# of Flow Executions per Thread", 
-            //        1));
-
-            return allActions.ToArray();
-        }
-
         //Wrapper method to call a method on action execution that requires more than the standard action parameters
         //Parameters:
         //User Context - The User Context of the User who executed the Action
         //Entity ID - The Entity ID of the Folder the Action Lives on
         //Answer - The integer input in the action input field
-        public void RunTest(AbstractUserContext userContext, string entityId, int answer)
-        {
-            PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
-
-            SetExecutionsValue(userContext, answer, Settings.Threads);
-        }
-        public void RunTest(AbstractUserContext userContext, string entityId, _Mapper answer)
+       
+        public void RunTest(AbstractUserContext userContext, _Mapper answer)
         {
             //PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
 
             SetExecutionsValue(userContext, answer.executions, answer.numberOfThreads, answer.flowId, answer.UnitTestName);
         }
 
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueNonBatch8(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 8);
-        //}
 
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueNonBatch16(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 16);
-        //}
-
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueNonBatch32(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 32);
-        //}
-
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueNonBatch64(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 64);
-        //}
-
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueBatch4(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 4);
-        //}
-
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueBatch8(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 8);
-        //}
-
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueBatch16(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 16);
-        //}
-
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueBatch32(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 32);
-        //}
-
-        ////Wrapper method to call a method on action execution that requires more than the standard action parameters
-        ////See above for Parameters
-        //private static void SetExecutionsValueBatch64(AbstractUserContext userContext, string entityId, int answer)
-        //{
-        //    SetExecutionsValue(userContext, answer, 64);
-        //}
-
-        //Method to spawn off a specified number of threads to run a specified flow a specified number of executions
-        //userContext is the user who triggered whatever is calling this method.
-        //executions is the number of times to execute the specified flow.
-        //numberOfThreads is the number of threads to spawn for executions.
-        //flowId is the flow to execute
-        public static void SetExecutionsValue(AbstractUserContext userContext, int executions, int numberOfThreads)
-        {
-            PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
-            Log Log = new Log("Performance Testing");
-            Stopwatch TotalStopWatch = new Stopwatch();
-            TotalStopWatch.Start();
-            int TotalFlowRuns = numberOfThreads * executions;
-            Log.Error("Starting " + TotalFlowRuns + " Flow Runs for " + Settings.DecisionsElementToTest);
-            for (int i = 0; i < numberOfThreads; i++)
-            {
-                FlowExecutionThread flowExecutionThread = new FlowExecutionThread(executions, userContext);
-                Thread thread = new Thread(new ThreadStart(flowExecutionThread.StartFlowExecution));
-                thread.Start();
-            }
-            TotalStopWatch.Stop();
-
-            Log.Error("Completed " + TotalFlowRuns + " Flow Runs In " + TotalStopWatch.Elapsed.TotalSeconds);
-            //Log.Error("Flow Run " + flowExecutionId + " took: " + innerStopWatch.Elapsed.TotalMilliseconds +
-            //          " milliseconds.");
-
-        }
         public static void SetExecutionsValue(AbstractUserContext userContext, int executions, int numberOfThreads, string flowId, string unitTestName)
         {
             //PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
             Log Log = new Log("Performance Testing");
-            Stopwatch TotalStopWatch = new Stopwatch();
-            TotalStopWatch.Start();
+           //Stopwatch TotalStopWatch = new Stopwatch();
+            //TotalStopWatch.Start();
             int TotalFlowRuns = numberOfThreads * executions;
             Log.Error("Starting " + TotalFlowRuns + " Flow Runs for " + unitTestName);
             for (int i = 0; i < numberOfThreads; i++)
@@ -261,27 +50,13 @@ namespace PerformanceTesting
                 Thread thread = new Thread(new ThreadStart(flowExecutionThread.StartFlowExecution));
                 thread.Start();
             }
-            TotalStopWatch.Stop();
+            //TotalStopWatch.Stop();
 
-            Log.Error("Kicked Off " + TotalFlowRuns + " Flow Runs In " + TotalStopWatch.Elapsed.TotalSeconds);
+            //Log.Error("Kicked Off " + TotalFlowRuns + " Flow Runs In " + TotalStopWatch.Elapsed.TotalSeconds);
             //Log.Error("Flow Run " + flowExecutionId + " took: " + innerStopWatch.Elapsed.TotalMilliseconds +
             //          " milliseconds.");
 
         }
-
-        public static bool AbsDev(double today, double yesterday)
-        {
-            double Sub1 = yesterday - today;
-            if (Sub1 < 0)
-                Sub1 = Sub1 * (-1);
-            double absValue = Sub1;
-            double multiply = absValue * 8;
-            if (today > multiply)
-                return true;
-            else
-                return false;
-}
-
     }
 
 }

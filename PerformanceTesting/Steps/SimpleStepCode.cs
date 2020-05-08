@@ -24,19 +24,11 @@ namespace PerformanceTesting.Steps
     {
         public void BatchRun(string flowId, int executions, int numberOfThreads)
         {
-            //AbstractUserContext UC = new PasswordCredentialsUserContext();
-            //UserContextHolder.Register(UC);
-            AbstractUserContext a = new SystemUserContext();
-            //var UT = UnitTest.GetEntityById(UnitTestId);
-            
-            //DecisionsFramework.ServiceLayer.Services.UnitTesting.UnitTestService unitTestService = new UnitTestService();
-            //unitTestService.EvaluateUnitTest(unitTestService.GetSessionUserContext("admin@decisions.com","admin"), new DecisionsFramework.Design.Flow.Service.MappingContext(), UnitTestId);
-            ///UnitTestController.
-            //UT = new UnitTest();
-            //var Flow = FlowEngine.GetFlow(flowId);
-            RunFlowFolderBehavior folder = new RunFlowFolderBehavior();
-            _Mapper mapper = new _Mapper() { executions = executions, numberOfThreads = numberOfThreads, flowId = flowId };
-            folder.RunTest(a,null,mapper);
+            AbstractUserContext UC = new SystemUserContext();
+            string utname = UnitTest.GetEntityById(flowId).EntityName;
+            RunUnitTestBatch runUnitTestBatch = new RunUnitTestBatch();
+            _Mapper mapper = new _Mapper() { executions = executions, numberOfThreads = numberOfThreads, flowId = flowId, UnitTestName = utname };
+            runUnitTestBatch.RunTest(UC,mapper);
         }
 
     }

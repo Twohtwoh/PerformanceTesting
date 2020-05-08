@@ -3,6 +3,7 @@ using DecisionsFramework;
 using DecisionsFramework.Design.Flow;
 using DecisionsFramework.Design.Flow.Mapping;
 using DecisionsFramework.Design.Flow.Service.Debugging;
+using DecisionsFramework.Design.Flow.Service.Debugging.Samples;
 using DecisionsFramework.Design.InputData;
 using DecisionsFramework.ServiceLayer;
 using DecisionsFramework.ServiceLayer.Services.UnitTesting;
@@ -24,16 +25,15 @@ namespace PerformanceTesting
         private readonly string _flowId;
 
         //Constructor to initialize the private variables
-        public FlowExecutionThread(int executions, AbstractUserContext userContext)
-        {
-            PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
-            this._executions = executions;
-            this._userContext = userContext;
-            this._flowId = Settings.DecisionsElementToTest;
-        }
+        //public FlowExecutionThread(int executions, AbstractUserContext userContext)
+        //{
+        //    //PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
+        //    this._executions = executions;
+        //    this._userContext = userContext;
+        //    //this._flowId = Settings.DecisionsElementToTest;
+        //}
         public FlowExecutionThread(int executions, AbstractUserContext userContext, string flowId)
         {
-            PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
             this._executions = executions;
             this._userContext = userContext;
             this._flowId = flowId;
@@ -52,27 +52,37 @@ namespace PerformanceTesting
                 outerStopWatch.Start();
                 UnitTestService unitTestService = new UnitTestService();
 
+
                 //Kick off the specified flow executions with the Flow Engine
-                for (int i = 0; i < _executions; i++)
+                if (_executions > 5)
                 {
-                    //Create a stopwatch and kick it off, logging a guid to identify the individual flow run
-                    string flowExecutionId = System.Guid.NewGuid().ToString();
-                    //Stopwatch innerStopWatch = new Stopwatch();
-                    //Log.Error("Starting Flow Run: " + flowExecutionId);
-                    //innerStopWatch.Start();
+                    for (int i = 0; i < _executions; i++)
+                    {
+                        //Execute the flow with canned data
+                        unitTestService.ExecuteUnitTestsForFlow(_userContext, _flowId, false);
+                       
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < _executions; i++)
+                    {
+                        //Create a stopwatch and kick it off, logging a guid to identify the individual flow run
+                        string flowExecutionId = System.Guid.NewGuid().ToString();
+                        Stopwatch innerStopWatch = new Stopwatch();
+                        Log.Error("Starting Flow Run: " + i);
+                        innerStopWatch.Start();
 
-                    //Execute the flow with canned data
+                        //Execute the flow with canned data
 
+                        unitTestService.ExecuteUnitTestsForFlow(_userContext, _flowId, false);
+                        //FlowEngine.StartSyncFlow(FlowEngine.GetFlow(_flowId), GetFlowStateData());
 
-                    unitTestService.ExecuteUnitTestsForFlow(_userContext, _flowId, false);
-                    //FlowEngine.StartSyncFlow(FlowEngine.GetFlow(_flowId), GetFlowStateData());
-
-
-
-                    //Stop the stopwatch and log how much time it took for the individual flow run
-                    //innerStopWatch.Stop();
-                    //Log.Error("Flow Run " + flowExecutionId + " took: " + innerStopWatch.Elapsed.TotalMilliseconds +
-                    //          " milliseconds.");
+                        //Stop the stopwatch and log how much time it took for the individual flow run
+                       innerStopWatch.Stop();
+                       Log.Error("Flow Run " + i + " of " + _executions + " took: " + innerStopWatch.Elapsed.TotalMilliseconds +
+                                  " milliseconds.");
+                    }
                 }
 
                 //Stop the stopwatch and log how much time it took for the batch of flow runs
@@ -82,38 +92,39 @@ namespace PerformanceTesting
         }
 
         //Private method containing canned data to use per flow run.
-        private static FlowStateData GetFlowStateData(string flowId)
-        {
-            //PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
-            FlowStateData Out = new FlowStateData();
+        //private static FlowStateData GetFlowStateData(string flowId)
+        //{
+        //    //PerformanceTestingSettings Settings = ModuleSettingsAccessor<PerformanceTestingSettings>.GetSettings();
+        //    FlowStateData Out = new FlowStateData();
             
             
-            //Out.AddValues();
-            //return Out;
-            //int i = 0;
-            //if (!Settings.Inputs.Equals(null))
-            //{
+                     
+        //    //Out.AddValues();
+        //    //return Out;
+        //    //int i = 0;
+        //    //if (!Settings.Inputs.Equals(null))
+        //    //{
 
-            //    try
-            //    {
-            //        foreach (var item in Settings.Inputs)
-            //        {
-            //            Out.Add(new KeyValuePairDataStructure(Settings.Inputs[i].key, Settings.Inputs[i].value));
-            //            i++;
-            //        }
-            //    }
-            //    catch (Exception e)
-            //    {
+        //    //    try
+        //    //    {
+        //    //        foreach (var item in Settings.Inputs)
+        //    //        {
+        //    //            Out.Add(new KeyValuePairDataStructure(Settings.Inputs[i].key, Settings.Inputs[i].value));
+        //    //            i++;
+        //    //        }
+        //    //    }
+        //    //    catch (Exception e)
+        //    //    {
 
-            //    }
-            //}
-            return Out;
+        //    //    }
+        //    //}
+        //    return Out;
                
-            //new KeyValuePairDataStructure("ID", "13d71ddb-51ac-11ea-8232-a72eeb3fabdb"),
-            //new KeyValuePairDataStructure("ClaimInput", "<Claim> <ClaimBatchID>5658907</ClaimBatchID> <ClaimerBatchID>0000831965</ClaimerBatchID> <ClaimerID>2158792</ClaimerID> <SoldtoCode>100108494</SoldtoCode> <ShiptoCode>100108494</ShiptoCode> <IsAR>false</IsAR> <Currency>EUR</Currency> <DateCreated>2020-01-24T00:00:00</DateCreated> <ClaimID>23158437</ClaimID> <ClaimerClaimID>6141348</ClaimerClaimID> <ClaimStatus>Submitted</ClaimStatus> <RefurbisherClaim>false</RefurbisherClaim> <ClaimKind>Repair</ClaimKind> <IsARClaim>false</IsARClaim> <ClaimLocation>Workshop</ClaimLocation> <ClaimedModelNumber>HD8603/01</ClaimedModelNumber> <ClaimedProductNumber>ATW901346620153</ClaimedProductNumber> <DatePurchase>2017-06-08T00:00:00</DatePurchase> <DateRepairReceivedFromConsumer>2020-01-11T00:00:00</DateRepairReceivedFromConsumer> <DateRepairReceivedByRepairer>2020-01-21T00:00:00</DateRepairReceivedByRepairer> <DateRepairCompleted>2020-01-24T00:00:00</DateRepairCompleted> <SellingDealerAddress> <Name>Tchibo Filiale 5782</Name> <CountryID>AT</CountryID> <Address>Malserstr. 37</Address> <ZipCode>6500</ZipCode> <City>Landeck</City> </SellingDealerAddress> <ConsumerAddress> <Name>Nagele</Name> <CountryID>AT</CountryID> <Address>Rifenal 23</Address> <ZipCode>6511</ZipCode> <City>Zams</City> <Phone>D</Phone> </ConsumerAddress> <ConsumerType>Unknown</ConsumerType> <Condition>1</Condition> <Symptom>670</Symptom> <ClaimRepair> <ClaimID>23158437</ClaimID> <Position>P327</Position> <Flag>1</Flag> <Defect>D</Defect> <Repair>AX</Repair> <Section>G36</Section> <PartNumberCalculated>996530073811</PartNumberCalculated> <Quantity>1</Quantity> </ClaimRepair> <ClaimRepair> <ClaimID>23158437</ClaimID> <Position>P126</Position> <Defect>A1</Defect> <Repair>A</Repair> <Section>G30</Section> <PartNumberCalculated>421946018401</PartNumberCalculated> <Quantity>1</Quantity> </ClaimRepair> <ClaimRepair> <ClaimID>23158437</ClaimID> <Position>391</Position> <Defect>1</Defect> <Repair>2</Repair> <Section>SYS</Section> <Quantity>0</Quantity> </ClaimRepair> <ClaimRepair> <ClaimID>23158437</ClaimID> <Position>P346</Position> <Defect>D</Defect> <Repair>A</Repair> <Section>G33</Section> <PartNumberCalculated>996530017348</PartNumberCalculated> <Quantity>1</Quantity> </ClaimRepair> </Claim>")
+        //    //new KeyValuePairDataStructure("ID", "13d71ddb-51ac-11ea-8232-a72eeb3fabdb"),
+        //    //new KeyValuePairDataStructure("ClaimInput", "<Claim> <ClaimBatchID>5658907</ClaimBatchID> <ClaimerBatchID>0000831965</ClaimerBatchID> <ClaimerID>2158792</ClaimerID> <SoldtoCode>100108494</SoldtoCode> <ShiptoCode>100108494</ShiptoCode> <IsAR>false</IsAR> <Currency>EUR</Currency> <DateCreated>2020-01-24T00:00:00</DateCreated> <ClaimID>23158437</ClaimID> <ClaimerClaimID>6141348</ClaimerClaimID> <ClaimStatus>Submitted</ClaimStatus> <RefurbisherClaim>false</RefurbisherClaim> <ClaimKind>Repair</ClaimKind> <IsARClaim>false</IsARClaim> <ClaimLocation>Workshop</ClaimLocation> <ClaimedModelNumber>HD8603/01</ClaimedModelNumber> <ClaimedProductNumber>ATW901346620153</ClaimedProductNumber> <DatePurchase>2017-06-08T00:00:00</DatePurchase> <DateRepairReceivedFromConsumer>2020-01-11T00:00:00</DateRepairReceivedFromConsumer> <DateRepairReceivedByRepairer>2020-01-21T00:00:00</DateRepairReceivedByRepairer> <DateRepairCompleted>2020-01-24T00:00:00</DateRepairCompleted> <SellingDealerAddress> <Name>Tchibo Filiale 5782</Name> <CountryID>AT</CountryID> <Address>Malserstr. 37</Address> <ZipCode>6500</ZipCode> <City>Landeck</City> </SellingDealerAddress> <ConsumerAddress> <Name>Nagele</Name> <CountryID>AT</CountryID> <Address>Rifenal 23</Address> <ZipCode>6511</ZipCode> <City>Zams</City> <Phone>D</Phone> </ConsumerAddress> <ConsumerType>Unknown</ConsumerType> <Condition>1</Condition> <Symptom>670</Symptom> <ClaimRepair> <ClaimID>23158437</ClaimID> <Position>P327</Position> <Flag>1</Flag> <Defect>D</Defect> <Repair>AX</Repair> <Section>G36</Section> <PartNumberCalculated>996530073811</PartNumberCalculated> <Quantity>1</Quantity> </ClaimRepair> <ClaimRepair> <ClaimID>23158437</ClaimID> <Position>P126</Position> <Defect>A1</Defect> <Repair>A</Repair> <Section>G30</Section> <PartNumberCalculated>421946018401</PartNumberCalculated> <Quantity>1</Quantity> </ClaimRepair> <ClaimRepair> <ClaimID>23158437</ClaimID> <Position>391</Position> <Defect>1</Defect> <Repair>2</Repair> <Section>SYS</Section> <Quantity>0</Quantity> </ClaimRepair> <ClaimRepair> <ClaimID>23158437</ClaimID> <Position>P346</Position> <Defect>D</Defect> <Repair>A</Repair> <Section>G33</Section> <PartNumberCalculated>996530017348</PartNumberCalculated> <Quantity>1</Quantity> </ClaimRepair> </Claim>")
 
 
-        }
+        //}
     }
 
 

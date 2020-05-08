@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DecisionsFramework\ServiceLayer\Actions\Common\BaseGetDataAction.cs" />
     <Compile Include="ModuleInit.cs" />
     <Compile Include="PerformanceTestingSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
